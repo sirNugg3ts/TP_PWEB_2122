@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using TPPweb2122.Data;
 using System.IO;
+using TPPweb2122.Models;
+
 namespace TPPweb2122
 {
     public class Startup
@@ -27,15 +29,19 @@ namespace TPPweb2122
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var dbpath = Path.Combine(Directory.GetCurrentDirectory(), "AppData");
+            string dbpath = Path.Combine(Directory.GetCurrentDirectory(), "AppData");
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection").Replace("[DataDirectory]",dbpath)));
+                    Configuration.GetConnectionString("DefaultConnection").Replace("[path]",dbpath)));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<Utilizador,IdentityRole<int>>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
+
             services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
