@@ -11,5 +11,8 @@ namespace TPPweb2122.Models
         public float Preco { get; set; }
         public DateTime dataInicio { get; set; }
         public DateTime dataFinal { get; set; }
+
+        public virtual Categoria Categoria { get; set; }
+        public int CategoriaId { get; set;}
     }
 }
