@@ -13,6 +13,6 @@ namespace TPPweb2122.Models
         public DateTime dataFinal { get; set; }
 
         public virtual Categoria Categoria { get; set; }
-        public int CategoriaId { get; set;}
+        public int CategoriaId { get; set; }
     }
 }
