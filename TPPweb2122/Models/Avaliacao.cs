@@ -2,5 +2,8 @@
 {
     public class Avaliacao
     {
+        public int AvaliacaoId { get; set; }
+        public int PontuacaoAvaliacao { get; set; }
+        public string DescricaoAvaliacao { get; set; }
     }
 }

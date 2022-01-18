@@ -1,4 +1,6 @@
-﻿namespace TPPweb2122.Models
+﻿using System;
+
+namespace TPPweb2122.Models
 {
     public class Imovel
     {
@@ -7,6 +9,7 @@
         public string Localizacao { get; set; }
         public string Descricao { get; set; }
         public float Preco { get; set; }
-        
+        public DateTime dataInicio { get; set; }
+        public DateTime dataFinal { get; set; }
     }
 }
