@@ -62,5 +62,11 @@ namespace TPPweb2122.Data
                 new IdentityUserRole<int>() { RoleId = 1, UserId = 4 }
             );
         }
+
+        public DbSet<TPPweb2122.Models.Cliente> Cliente { get; set; }
+
+        public DbSet<TPPweb2122.Models.Gestor> Gestor { get; set; }
+
+        public DbSet<TPPweb2122.Models.Funcionario> Funcionario { get; set; }
     }
 }

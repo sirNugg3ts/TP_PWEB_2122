@@ -10,5 +10,7 @@ namespace TPPweb2122.Models
 
         public int? ImovelId { get; set; }
         public virtual Imovel Imovel {get; set; }
+        public int? ClienteId { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }
