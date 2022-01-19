@@ -46,6 +46,36 @@ namespace TPPweb2122.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "2",
+                            Name = "Gestor",
+                            NormalizedName = "GESTOR"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "3",
+                            Name = "Funcionario",
+                            NormalizedName = "FUNCIONARIO"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ConcurrencyStamp = "4",
+                            Name = "Cliente",
+                            NormalizedName = "CLIENTE"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -128,6 +158,18 @@ namespace TPPweb2122.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 3,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -147,6 +189,61 @@ namespace TPPweb2122.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Categoria", b =>
+                {
+                    b.Property<int>("CategoriaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NomeCategoria")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoriaId");
+
+                    b.ToTable("Categorias");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Imovel", b =>
+                {
+                    b.Property<int>("ImovelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Localizacao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeAlojamento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Preco")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("dataFinal")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dataInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImovelId");
+
+                    b.HasIndex("CategoriaId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Imoveis");
                 });
 
             modelBuilder.Entity("TPPweb2122.Models.Utilizador", b =>
@@ -214,6 +311,24 @@ namespace TPPweb2122.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "87d573a7-d8ed-4a78-8dc3-0f45cefe1769",
+                            Email = "admin@airbnb.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ADMIN@AIRBNB.COM",
+                            NormalizedUserName = "ADMIN@AIRBNB.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOpvfez9wLSMsmXeGgbr+fxLSN5lIAsEUQEwpCRLpAW2gDgrgvdYkA23A2u3pz12LQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f786487d-d1b2-4b49-a14d-40defb737dfe",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@airbnb.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -265,6 +380,26 @@ namespace TPPweb2122.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Imovel", b =>
+                {
+                    b.HasOne("TPPweb2122.Models.Categoria", "Categoria")
+                        .WithMany("Imoveis")
+                        .HasForeignKey("CategoriaId");
+
+                    b.HasOne("TPPweb2122.Models.Utilizador", "User")
+                        .WithMany()
+                        .HasForeignKey("userId");
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Categoria", b =>
+                {
+                    b.Navigation("Imoveis");
                 });
 #pragma warning restore 612, 618
         }

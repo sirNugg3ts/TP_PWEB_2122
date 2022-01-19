@@ -8,7 +8,7 @@ namespace TPPweb2122.Models
         public DateTime dataEntrada { get; set; }   
         public DateTime dataSaida { get; set; } 
 
-        public int ImovelId { get; set; }
+        public int? ImovelId { get; set; }
         public virtual Imovel Imovel {get; set; }
     }
 }
