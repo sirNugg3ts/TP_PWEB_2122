@@ -306,10 +306,14 @@ namespace TPPweb2122.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Morada")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -332,6 +336,7 @@ namespace TPPweb2122.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -360,15 +365,18 @@ namespace TPPweb2122.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "81ee9110-1e73-45bb-b8c4-5a6f7893c1bb",
+                            ConcurrencyStamp = "72cdbc68-50c0-4e8a-b3f7-2c3478dc5a6b",
                             Email = "admin@airbnb.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
+                            Morada = "454",
+                            Nome = "344",
                             NormalizedEmail = "ADMIN@AIRBNB.COM",
                             NormalizedUserName = "ADMIN@AIRBNB.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECulFETGG5pbwOH1jfyiW46Y7296BVPPl1NXbTd01BxZVvbyWR7z947UfJIGqWdogA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOmnmtLxBSnc3sTK2hQDcZ40pNskHw0xSmG7bR13BybrHWlblYJ/BVNQFCI/fw7yUQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6ad1cbf1-0afd-4724-854c-99481a3b2cfa",
+                            SecurityStamp = "e1a28468-1d88-4653-b2de-a10a7301b092",
+                            Telefone = "945",
                             TwoFactorEnabled = false,
                             UserName = "admin@airbnb.com"
                         });
