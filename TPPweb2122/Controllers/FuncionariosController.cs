@@ -31,13 +31,14 @@ namespace TPPweb2122.Controllers
             {
                
                 funcionario = _context.Funcionario.Where(f => f.gestorId== int.Parse(userId));
+                return View(await funcionario.ToListAsync());
             }
             else
             {
-                funcionario = _context.Funcionario.Include(g => g.gestorId);
+               return View(await _context.Funcionario.ToListAsync());
             }
             
-            return View(await funcionario.ToListAsync());
+           
         }
 
         // GET: Funcionarios/Details/5
