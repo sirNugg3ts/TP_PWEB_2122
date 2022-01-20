@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TPPweb2122.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Reservas</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dataEntrada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dataSaida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imovel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.dataEntrada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dataSaida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imovel.ImovelId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Id)
+            </td>
+            <td>
+                <a asp-action="Editar" asp-route-id="@item.ReservaId">Edit</a> |
+                <a asp-action="Detalhes" asp-route-id="@item.ReservaId">Details</a> |
+                <a asp-action="Apagar" asp-route-id="@item.ReservaId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

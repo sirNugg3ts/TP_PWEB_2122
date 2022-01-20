@@ -71,5 +71,7 @@ namespace TPPweb2122.Data
         public DbSet<TPPweb2122.Models.Gestor> Gestor { get; set; }
 
         public DbSet<TPPweb2122.Models.Funcionario> Funcionario { get; set; }
+
+        public DbSet<TPPweb2122.Models.Reserva> Reserva { get; set; }
     }
 }
