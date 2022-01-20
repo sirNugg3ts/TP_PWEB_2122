@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,17 +15,29 @@ namespace TPPweb2122.Controllers
     public class FuncionariosController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public FuncionariosController(ApplicationDbContext context)
+        private readonly UserManager<Utilizador> _userManager;
+        public FuncionariosController(ApplicationDbContext context, UserManager<Utilizador> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Funcionarios
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Funcionario.Include(f => f.Gestor);
-            return View(await applicationDbContext.ToListAsync());
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            IQueryable<Funcionario> funcionario;
+            if (User.IsInRole("Gestor"))
+            {
+               
+                funcionario = _context.Funcionario.Where(f => f.gestorId== int.Parse(userId));
+            }
+            else
+            {
+                funcionario = _context.Funcionario.Include(g => g.gestorId);
+            }
+            
+            return View(await funcionario.ToListAsync());
         }
 
         // GET: Funcionarios/Details/5
@@ -57,11 +71,20 @@ namespace TPPweb2122.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("gestorId,Nome,Morada,Telefone,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Funcionario funcionario)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Morada,Telefone,UserName,Email,EmailConfirmed")] Funcionario funcionario)
         {
+            var user = new Utilizador();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
             {
+                string password = "Func#1234";
+                
+                funcionario = new Funcionario { UserName = funcionario.Email, Email = funcionario.Email, Nome = funcionario.Nome, Morada = funcionario.Morada, Telefone = funcionario.Telefone, gestorId = int.Parse(userId)};
+                funcionario.EmailConfirmed = true;
                 _context.Add(funcionario);
+                
+
+                await _userManager.CreateAsync(funcionario, password);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

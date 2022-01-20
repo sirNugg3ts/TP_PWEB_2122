@@ -34,8 +34,11 @@ namespace TPPweb2122.Controllers
                 imovel = _context.Imoveis.Include(c => c.Categoria)
                     .Where(g => g.Gestor.Id.ToString() == userId);
             }
-                var applicationDbContext = _context.Imoveis.Include(i => i.Categoria);
-            return View(await applicationDbContext.ToListAsync());
+            else
+            {
+                imovel = _context.Imoveis.Include(i => i.Categoria);
+            } 
+            return View(await imovel.ToListAsync());
         }
 
         // GET: Imovels/Details/5

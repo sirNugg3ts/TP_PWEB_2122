@@ -12,9 +12,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Gestor)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
@@ -25,11 +23,10 @@
                 @Html.DisplayNameFor(model => model.Telefone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-           
-            <th>
                 @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gestor)
             </th>
            
             <th></th>
@@ -51,13 +48,11 @@
                 @Html.DisplayFor(modelItem => item.Telefone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-          
-            <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-           
+            <td>
+                @Html.DisplayFor(modelItem => item.gestorId)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |

@@ -18,7 +18,6 @@ namespace TPPweb2122.Controllers
         {
             _context = context;
         }
-
         // GET: Gestors
         public async Task<IActionResult> Index()
         {
@@ -56,8 +55,10 @@ namespace TPPweb2122.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Nome,Morada,Telefone,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Gestor gestor)
         {
+            
             if (ModelState.IsValid)
             {
+                
                 _context.Add(gestor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
