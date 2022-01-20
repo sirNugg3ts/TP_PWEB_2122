@@ -40,18 +40,26 @@ namespace TPPweb2122.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Telefone")]
             public string Telefone { get; set; }
+
+            public string Morada { get; set; }
+            public string Nome { get; set; }
         }
 
         private async Task LoadAsync(Utilizador user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var telefone = await _userManager.GetPhoneNumberAsync(user);
+            var telefone = user.Telefone;
+            var nome = user.Nome;
+            var morada = user.Morada;
 
             Username = userName;
 
             Input = new InputModel
             {
-                Telefone = telefone
+                Telefone = telefone,
+                Nome = nome,
+                Morada = morada
+
             };
         }
 
@@ -81,19 +89,26 @@ namespace TPPweb2122.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var phoneNumber = user.Telefone;
             if (Input.Telefone != phoneNumber)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.Telefone);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
+                user.Telefone = phoneNumber;
+                await _userManager.UpdateAsync(user);
+            }
+            var nome = user.Nome;
+            if(nome != Input.Nome)
+            {
+                user.Nome = Input.Nome;
+                await _userManager.UpdateAsync(user);
+            }
+            if(user.Morada != Input.Morada)
+            {
+                user.Morada = Input.Morada;
+                await _userManager.UpdateAsync(user);
             }
             
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Atualizado com sucesso!";
             return RedirectToPage();
         }
     }

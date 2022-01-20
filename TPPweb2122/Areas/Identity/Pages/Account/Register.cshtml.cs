@@ -91,6 +91,7 @@ namespace TPPweb2122.Areas.Identity.Pages.Account
             var user = new Utilizador();
             var role = Roles.RoleUtils.RegistSelectList.FirstOrDefault(s => s.Value == Input.RoleId.ToString());
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 if(role.Text == "Cliente")
