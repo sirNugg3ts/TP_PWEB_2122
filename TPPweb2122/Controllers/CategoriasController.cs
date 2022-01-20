@@ -23,12 +23,14 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Categorias
+        [Authorize(Roles ="Admin,Gestor,Funcionario")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categorias.ToListAsync());
         }
 
         // GET: Categorias/Details/5
+        [Authorize(Roles = "Admin,Gestor,Funcionario")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +49,7 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Categorias/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -57,6 +60,7 @@ namespace TPPweb2122.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("CategoriaId,NomeCategoria")] Categoria categoria)
         {
             if (ModelState.IsValid)
@@ -69,6 +73,7 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Categorias/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,6 +94,7 @@ namespace TPPweb2122.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("CategoriaId,NomeCategoria")] Categoria categoria)
         {
             if (id != categoria.CategoriaId)
@@ -120,6 +126,7 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Categorias/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,6 +147,7 @@ namespace TPPweb2122.Controllers
         // POST: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var categoria = await _context.Categorias.FindAsync(id);

@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace TPPweb2122.Controllers
 {
-    [Authorize]
+    
     public class ImovelsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -61,6 +61,7 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Imovels/Create
+        [Authorize(Roles = "Admin,Gestor")]
         public IActionResult Create()
         {
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "NomeCategoria");
@@ -72,6 +73,7 @@ namespace TPPweb2122.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Gestor")]
         public async Task<IActionResult> Create([Bind("ImovelId,NomeAlojamento,Localizacao,Descricao,Preco,dataInicio,dataFinal,CategoriaId")] Imovel imovel)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -87,6 +89,7 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Imovels/Edit/5
+        [Authorize(Roles = "Admin,Gestor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -108,6 +111,7 @@ namespace TPPweb2122.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Gestor")]
         public async Task<IActionResult> Edit(int id, [Bind("ImovelId,NomeAlojamento,Localizacao,Descricao,Preco,dataInicio,dataFinal,CategoriaId")] Imovel imovel)
         {
             if (id != imovel.ImovelId)
@@ -140,6 +144,7 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Imovels/Delete/5
+        [Authorize(Roles = "Admin,Gestor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -161,6 +166,7 @@ namespace TPPweb2122.Controllers
         // POST: Imovels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Gestor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var imovel = await _context.Imoveis.FindAsync(id);
