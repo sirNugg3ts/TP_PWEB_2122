@@ -9,6 +9,7 @@ using TPPweb2122.Data;
 using TPPweb2122.Models;
 
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace TPPweb2122.Controllers
 {
@@ -16,16 +17,24 @@ namespace TPPweb2122.Controllers
     public class ImovelsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        
         public ImovelsController(ApplicationDbContext context)
         {
             _context = context;
+            
         }
 
         // GET: Imovels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? boardpages)
         {
-            var applicationDbContext = _context.Imoveis.Include(i => i.Categoria);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            IQueryable<Imovel> imovel;
+            if (User.IsInRole("Gestor"))
+            {
+                imovel = _context.Imoveis.Include(c => c.Categoria)
+                    .Where(g => g.Gestor.Id.ToString() == userId);
+            }
+                var applicationDbContext = _context.Imoveis.Include(i => i.Categoria);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -51,7 +60,7 @@ namespace TPPweb2122.Controllers
         // GET: Imovels/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaId");
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "NomeCategoria");
             return View();
         }
 
@@ -62,8 +71,10 @@ namespace TPPweb2122.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ImovelId,NomeAlojamento,Localizacao,Descricao,Preco,dataInicio,dataFinal,CategoriaId")] Imovel imovel)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
             {
+                imovel.gestorId = int.Parse(userId);
                 _context.Add(imovel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

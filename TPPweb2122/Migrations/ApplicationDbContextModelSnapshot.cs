@@ -365,7 +365,7 @@ namespace TPPweb2122.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "72cdbc68-50c0-4e8a-b3f7-2c3478dc5a6b",
+                            ConcurrencyStamp = "083cff70-8f97-4de3-a5a9-dfeb06018c4c",
                             Email = "admin@airbnb.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
@@ -373,9 +373,9 @@ namespace TPPweb2122.Migrations
                             Nome = "344",
                             NormalizedEmail = "ADMIN@AIRBNB.COM",
                             NormalizedUserName = "ADMIN@AIRBNB.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOmnmtLxBSnc3sTK2hQDcZ40pNskHw0xSmG7bR13BybrHWlblYJ/BVNQFCI/fw7yUQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMpAsyH3rkFkstWjURA45i+8XY1k5HTiWO+eT8OW1WBY9TOFkJ6oa3fo7Sfs116SuA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e1a28468-1d88-4653-b2de-a10a7301b092",
+                            SecurityStamp = "454b8f81-f684-4920-a0b3-94111c694d0f",
                             Telefone = "945",
                             TwoFactorEnabled = false,
                             UserName = "admin@airbnb.com"
