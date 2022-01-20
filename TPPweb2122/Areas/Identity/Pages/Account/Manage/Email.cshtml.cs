@@ -46,7 +46,7 @@ namespace TPPweb2122.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Novo email")]
             public string NewEmail { get; set; }
         }
 
