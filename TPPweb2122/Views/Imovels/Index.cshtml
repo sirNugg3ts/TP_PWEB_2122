@@ -1,14 +1,22 @@
-﻿@model IEnumerable<TPPweb2122.Models.Imovel>
+﻿@*model IEnumerable<TPPweb2122.Models.Imovel>*@
+@model TPPweb2122.ViewModels.ImoveisViewModel
+
+
+@using X.PagedList.Mvc.Core; @*import this so we get our HTML Helper*@
+@using X.PagedList; @*import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)*@
+@using X.PagedList.Mvc.Core.Fluent
+@using X.PagedList.Web.Common
 
 @{
     ViewData["Title"] = "Index";
-    
+    var dados = (IPagedList)Model.Imoveis;
 }
+<link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
 
 <h1>Index</h1>
 
 <p>
-    @if (User.IsInRole("Funcionario"))
+    @if (User.IsInRole("Gestor"))
     {
         <a class="btn btn-primary" asp-controller="Imovels" asp-action="Create">Criar novo Imovel</a>
         <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Ver Reservas</a>
@@ -16,39 +24,39 @@
         <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Reservar</a>
     }
 </p>
-<table class="table">
+<div class="table-responsive">
+    <table class="table table-bordered">
     <thead>
         
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NomeAlojamento)
+               Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Localizacao)
+                Localização
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
+                Descrição
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Preco)
+               Preço
+            <th>
+                Data de Entrada
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dataInicio)
+                Data de Saída
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dataFinal)
+              Categoria
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.gestorId)
+                Gestor
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Imoveis) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeAlojamento)
@@ -87,3 +95,13 @@
 }
     </tbody>
 </table>
+
+</div>
+
+    <div>
+        @(Html.Pager(dados)
+        .Url(page => Url.Action("Index", new { page = page }))
+        .DisplayLinkToFirstPage(PagedListDisplayMode.IfNeeded)
+        .DisplayLinkToLastPage(PagedListDisplayMode.IfNeeded)
+        .Build())
+    </div>

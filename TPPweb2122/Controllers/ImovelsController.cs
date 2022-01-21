@@ -10,6 +10,7 @@ using TPPweb2122.Models;
 
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using TPPweb2122.ViewModels;
 
 namespace TPPweb2122.Controllers
 {
@@ -25,8 +26,9 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Imovels
-        public async Task<IActionResult> Index(int? boardpages)
+        public async Task<IActionResult> Index(int? page)
         {
+            var imoveisview = new ImoveisViewModel();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             IQueryable<Imovel> imovel;
             if (User.IsInRole("Gestor"))
@@ -37,8 +39,11 @@ namespace TPPweb2122.Controllers
             else
             {
                 imovel = _context.Imoveis.Include(i => i.Categoria);
-            } 
-            return View(await imovel.ToListAsync());
+            }
+            int pagina = (page == null || page < 1) ? 1 : page.Value;
+            int nReg = 2;
+            imoveisview.paginacao(imovel, pagina, nReg);
+            return View(imoveisview);
         }
 
         // GET: Imovels/Details/5
