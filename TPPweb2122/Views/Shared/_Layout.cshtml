@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/main.css" />
 </head>
-<body style="background-image:url(/images/bg-01.jpg);background-size:cover;">
+
+<body style="background-image:url(/images/bg-01.jpg);background-size:cover;background-repeat:no-repeat;background-position:center center;background-attachment:fixed">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TPPweb2122</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="max-width:10%;">
+                    <img class="d-block mx-auto img-fluid" src="/images/logo_transparent.png"  />
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -52,13 +55,13 @@
             </div>
         </nav>
     </header>
-
+     @RenderBody()
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()
+           
         </main>
     </div>
-    <footer class="border-top footer text-muted" id="footer" style="background-color:white;">
+    <footer class="border-top footer fixed-bottom text-muted" id="footer" style="background-color:white;">
         <div class="container">
             &copy; 2022 - TPPweb2122 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

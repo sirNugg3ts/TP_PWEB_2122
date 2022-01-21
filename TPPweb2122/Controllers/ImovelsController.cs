@@ -41,7 +41,7 @@ namespace TPPweb2122.Controllers
                 imovel = _context.Imoveis.Include(i => i.Categoria);
             }
             int pagina = (page == null || page < 1) ? 1 : page.Value;
-            int nReg = 2;
+            int nReg = 8;
             imoveisview.paginacao(imovel, pagina, nReg);
             return View(imoveisview);
         }
