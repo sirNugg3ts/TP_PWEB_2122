@@ -93,7 +93,7 @@ namespace TPPweb2122.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Discriminator", reserva.ClienteId);
-            ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "ImovelId", reserva.ImovelId);
+            ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "NomeAlojamento", reserva.ImovelId);
             return View(reserva);
         }
 
@@ -101,6 +101,8 @@ namespace TPPweb2122.Controllers
         [Authorize(Roles = "Funcionario,Gestor,Cliente")]
         public async Task<IActionResult> Edit(int? id)
         {
+
+            
             if (id == null)
             {
                 return NotFound();
@@ -112,7 +114,7 @@ namespace TPPweb2122.Controllers
                 return NotFound();
             }
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Discriminator", reserva.ClienteId);
-            ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "ImovelId", reserva.ImovelId);
+            ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "NomeAlojamento",reserva.ImovelId);
             return View(reserva);
         }
 
@@ -151,7 +153,7 @@ namespace TPPweb2122.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Discriminator", reserva.ClienteId);
-            ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "ImovelId", reserva.ImovelId);
+            ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "NomeAlojamento",reserva.ImovelId); 
             return View(reserva);
         }
 

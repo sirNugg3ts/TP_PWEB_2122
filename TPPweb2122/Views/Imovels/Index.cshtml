@@ -8,26 +8,25 @@
 @using X.PagedList.Web.Common
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Apartamentos";
     var dados = (IPagedList)Model.Imoveis;
 }
 <link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
 
-<h1>Index</h1>
+<h1>Apartamentos</h1>
 
 <p>
     @if (User.IsInRole("Gestor"))
     {
         <a class="btn btn-primary" asp-controller="Imovels" asp-action="Create">Criar novo Imovel</a>
-        <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Ver Reservas</a>
+        <a class="btn btn-primary" asp-controller="Reservas" asp-action="Index">Ver Reservas</a>
     }else if(User.IsInRole("Cliente")){
         <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Reservar</a>
     }
 </p>
-<div class="table-responsive">
-    <table class="table table-bordered">
-    <thead>
-        
+<div class=" table-responsive">
+    <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                Nome
@@ -52,7 +51,10 @@
             <th>
                 Gestor
             </th>
-            <th></th>
+                   
+                        <th>Ações</th>
+                    
+            
         </tr>
     </thead>
     <tbody>
@@ -82,15 +84,26 @@
             <td>
                 @Html.DisplayFor(modelItem => item.gestorId)
             </td>
-
-            <td>
                     @if (User.IsInRole("Admin") || User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
-                   {
-                        <a asp-action="Edit" asp-route-id="@item.ImovelId">Editar</a> 
-                        <a asp-action="Details" asp-route-id="@item.ImovelId">Detalhes</a> 
-                        <a asp-action="Delete" asp-route-id="@item.ImovelId">Apagar</a>
+                    {
+                        <td>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ImovelId">Editar</a> 
+                            <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ImovelId">Detalhes</a> 
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ImovelId">Apagar</a>
+
+                        </td>
                     }
-            </td>
+                    else
+                    {
+                        <td>
+
+                            <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ImovelId">Detalhes</a> 
+
+
+                        </td>
+                    }
+
+            
         </tr>
 }
     </tbody>

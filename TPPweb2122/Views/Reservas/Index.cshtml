@@ -50,9 +50,13 @@
                 @Html.DisplayFor(modelItem => item.Confirmacao)
             </td>
             <td>
-                <a asp-action="Editar" asp-route-id="@item.ReservaId">Edit</a> |
-                <a asp-action="Detalhes" asp-route-id="@item.ReservaId">Details</a> |
-                <a asp-action="Apagar" asp-route-id="@item.ReservaId">Delete</a>
+                    @if (User.IsInRole("Gestor"))
+                    {
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ReservaId">Edit</a>
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ReservaId">Details</a>
+                    }
+               
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ReservaId">Delete</a>
             </td>
         </tr>
 }
