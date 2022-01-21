@@ -32,7 +32,7 @@ namespace TPPweb2122.Controllers
             if (User.IsInRole("Gestor"))
             {
                 imovel = _context.Imoveis.Include(c => c.Categoria)
-                    .Where(g => g.Gestor.Id.ToString() == userId);
+                    .Where(f => f.gestorId == int.Parse(userId));
             }
             else
             {

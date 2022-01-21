@@ -256,6 +256,9 @@ namespace TPPweb2122.Migrations
                     b.Property<int?>("ClienteId")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("Confirmacao")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ImovelId")
                         .HasColumnType("int");
 
@@ -365,7 +368,7 @@ namespace TPPweb2122.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "083cff70-8f97-4de3-a5a9-dfeb06018c4c",
+                            ConcurrencyStamp = "426b3f08-e990-4c8d-bfc1-11a350138d77",
                             Email = "admin@airbnb.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
@@ -373,9 +376,9 @@ namespace TPPweb2122.Migrations
                             Nome = "344",
                             NormalizedEmail = "ADMIN@AIRBNB.COM",
                             NormalizedUserName = "ADMIN@AIRBNB.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMpAsyH3rkFkstWjURA45i+8XY1k5HTiWO+eT8OW1WBY9TOFkJ6oa3fo7Sfs116SuA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFjGMOTNCi+vMB78gzCV3yHmDe37usXUFeDz+PQYKFlcRSO9BYzRXBHcoj4npfxZHw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "454b8f81-f684-4920-a0b3-94111c694d0f",
+                            SecurityStamp = "c103c12d-ad5c-4183-8783-fc59ffefaeac",
                             Telefone = "945",
                             TwoFactorEnabled = false,
                             UserName = "admin@airbnb.com"

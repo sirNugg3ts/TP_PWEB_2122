@@ -8,10 +8,17 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.IsInRole("Funcionario"))
+    {
+        <a class="btn btn-primary" asp-controller="Imovels" asp-action="Create">Criar novo Imovel</a>
+        <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Ver Reservas</a>
+    }else if(User.IsInRole("Cliente")){
+        <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Reservar</a>
+    }
 </p>
 <table class="table">
     <thead>
+        
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.NomeAlojamento)
@@ -67,10 +74,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.gestorId)
             </td>
+
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ImovelId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ImovelId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.ImovelId">Apagar</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+                   {
+                        <a asp-action="Edit" asp-route-id="@item.ImovelId">Editar</a> 
+                        <a asp-action="Details" asp-route-id="@item.ImovelId">Detalhes</a> 
+                        <a asp-action="Delete" asp-route-id="@item.ImovelId">Apagar</a>
+                    }
             </td>
         </tr>
 }

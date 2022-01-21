@@ -3,12 +3,13 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Reservas</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole("Cliente"))
+{
+    <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Reservar</a>
+    <a class="btn btn-primary" asp-controller="Reservas" asp-action="Historico">Historico</a>
+    
+}
+ <h1>Reservas</h1>
 <table class="table">
     <thead>
         <tr>
@@ -24,6 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Cliente)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Confirmacao)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -37,10 +41,13 @@
                 @Html.DisplayFor(modelItem => item.dataSaida)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Imovel.ImovelId)
+                @Html.DisplayFor(modelItem => item.Imovel.NomeAlojamento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Id)
+                @Html.DisplayFor(modelItem => item.Cliente.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Confirmacao)
             </td>
             <td>
                 <a asp-action="Editar" asp-route-id="@item.ReservaId">Edit</a> |

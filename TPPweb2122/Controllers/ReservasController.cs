@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,10 +26,23 @@ namespace TPPweb2122.Controllers
         [Authorize(Roles = "Admin,Gestor,Funcionario,Cliente")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel);
-            return View(await applicationDbContext.ToListAsync());
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            if (User.IsInRole("Gestor"))
+            {
+                return View(await _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(i => i.Imovel.gestorId == int.Parse(userId)).ToListAsync());
+            }
+            else 
+            {
+                return View(await _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(c => (c.ClienteId == int.Parse(userId)) && ( c.Confirmacao == false)).ToListAsync());
+            }
+            
         }
-
+        public async Task<IActionResult> Historico()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return View(await _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(c => (c.ClienteId == int.Parse(userId)) && (c.Confirmacao == true)).ToListAsync());
+        }
         // GET: Reservas/Details/5
         [Authorize(Roles = "Admin,Gestor,Funcionario,Cliente")]
         public async Task<IActionResult> Details(int? id)
@@ -55,8 +69,7 @@ namespace TPPweb2122.Controllers
 
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Discriminator");
-            ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "ImovelId");
+            ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "NomeAlojamento");
             return View();
         }
 
@@ -68,8 +81,13 @@ namespace TPPweb2122.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReservaId,dataEntrada,dataSaida,ImovelId,ClienteId")] Reserva reserva)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
             {
+
+                reserva.ClienteId = int.Parse(userId);
+                reserva.Confirmacao = false;
+                // Falta verificação do tempo if(imovel.DataInicio>dataEntrada || dataEntrada>imovel.dataFim)
                 _context.Add(reserva);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
