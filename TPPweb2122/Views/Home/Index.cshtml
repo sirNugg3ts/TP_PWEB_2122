@@ -5,38 +5,46 @@
 @{
     ViewData["Title"] = "My AirBnB";
 }
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
+   
+   
 
 <!-- Header - set the background image for the header in the line below-->
-        <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
-            <div class="text-center my-5">
-                <img class="img-fluid rounded-circle mb-4" src="https://dummyimage.com/150x150/6c757d/dee2e6.jpg" alt="..." />
-                <h1 class="text-white fs-3 fw-bolder">Full Width Pics</h1>
-                <p class="text-white-50 mb-0">Landing Page Template</p>
-            </div>
-        </header>
+       <div class="imgLoader"></div>
 
- <!-- Header-->
- <!--
-<header class="py-5">
-            <div class="container px-lg-5">
-                <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
-                    <div class="m-4 m-lg-5">
-                        <h1 class="display-5 fw-bold">My AirBnB</h1>
-                        <p class="fs-4">Bem-Vindo ao projeto de PWEB MyAirBnB</p>
-                        @if (SignInManager.IsSignedIn(User))
-                       {
-                           <p class="mb-0">Bem-vindo @User.Identity.Name !</p>
-                       }else{
-                           <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                       }
-                    </div>
+
+<div class="container" style="height:50vh;">
+
+  <div class="book">
+    <div class="gap"></div>
+    <div class="pages">
+      <div class="page"></div>
+      <div class="page"></div>
+      <div class="page"></div>
+      <div class="page"></div>
+      <div class="page"></div>
+      <div class="page"></div>
+    </div>
+    <div class="flips">
+      <div class="flip flip1">
+        <div class="flip flip2">
+          <div class="flip flip3">
+            <div class="flip flip4">
+              <div class="flip flip5">
+                <div class="flip flip6">
+                  <div class="flip flip7"></div>
                 </div>
+              </div>
             </div>
-        </header>
- -->
-        
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <section class="pt-4">
+<div class="container">
+     <section class="pt-4">
             <div class="container px-lg-5">
                 <!-- Page Features-->
                 <!--Visitar Apartamentos-->
@@ -128,3 +136,29 @@
                 </div>
             </div>
         </section>
+</div>
+
+
+
+ <!-- Header-->
+ <!--
+<header class="py-5">
+            <div class="container px-lg-5">
+                <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+                    <div class="m-4 m-lg-5">
+                        <h1 class="display-5 fw-bold">My AirBnB</h1>
+                        <p class="fs-4">Bem-Vindo ao projeto de PWEB MyAirBnB</p>
+                        @if (SignInManager.IsSignedIn(User))
+                       {
+                           <p class="mb-0">Bem-vindo @User.Identity.Name !</p>
+                       }else{
+                           <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                       }
+                    </div>
+                </div>
+            </div>
+        </header>
+ -->
+        
+
+       
