@@ -82,10 +82,12 @@ namespace TPPweb2122.Controllers
                 
                 funcionario = new Funcionario { UserName = funcionario.Email, Email = funcionario.Email, Nome = funcionario.Nome, Morada = funcionario.Morada, Telefone = funcionario.Telefone, gestorId = int.Parse(userId)};
                 funcionario.EmailConfirmed = true;
+                
                 _context.Add(funcionario);
                 
 
                 await _userManager.CreateAsync(funcionario, password);
+                await _userManager.AddToRoleAsync(funcionario, "Funcionario");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
