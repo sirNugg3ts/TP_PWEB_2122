@@ -52,11 +52,11 @@
             <td>
                     @if (User.IsInRole("Gestor"))
                     {
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ReservaId">Edit</a>
-                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ReservaId">Details</a>
+                        <a class="btn btn-primary m-1" asp-action="Edit" asp-route-id="@item.ReservaId">Edit</a>
+                        <a class="btn btn-info m-1" asp-action="Details" asp-route-id="@item.ReservaId">Details</a>
                     }
                
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ReservaId">Delete</a>
+                <a class="btn btn-danger m-1" asp-action="Delete" asp-route-id="@item.ReservaId">Delete</a>
             </td>
         </tr>
 }
