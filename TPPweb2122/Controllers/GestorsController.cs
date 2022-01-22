@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TPPweb2122.Data;
 using TPPweb2122.Models;
+using TPPweb2122.ViewModels;
 
 namespace TPPweb2122.Controllers
 {
@@ -19,9 +20,15 @@ namespace TPPweb2122.Controllers
             _context = context;
         }
         // GET: Gestors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.Gestor.ToListAsync());
+            var gestorView = new GestorViewModel();
+            IQueryable<Gestor> listaGestores = _context.Gestor;
+            int pagina = (page == null || page < 1) ? 1 : page.Value;
+            int nReg = 8;
+            gestorView.paginacao(listaGestores, pagina, nReg);
+
+            return View(gestorView);
         }
 
         // GET: Gestors/Details/5

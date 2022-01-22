@@ -14,4 +14,14 @@ namespace TPPweb2122.ViewModels
             return;
         }
     }
+    public class GestorViewModel
+    {
+        public IPagedList<Gestor> Gestores { get; set; }
+
+        public void paginacao(IQueryable<Gestor> gestores, int page, int nreg)
+        {
+            Gestores = gestores.ToPagedList(page, nreg);
+            return;
+        }
+    }
 }
