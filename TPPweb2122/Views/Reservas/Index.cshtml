@@ -14,13 +14,14 @@
 <link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
 <div class="container-fluid w-75 p-3 rounded" style="background-color:white;"> 
     
-@if (User.IsInRole("Cliente"))
+
+ <h1>Reservas</h1>
+ @if (User.IsInRole("Cliente"))
 {
     <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Reservar</a>
     <a class="btn btn-primary" asp-controller="Reservas" asp-action="Historico">Historico</a>
     
 }
- <h1>Reservas</h1>
   <div class="m-2 table-responsive">
       <table class="table table-bordered table-hover">
     <thead class="thead-dark">

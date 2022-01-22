@@ -10,10 +10,10 @@
 <link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
 
 <div class="container-fluid w-75 p-3 rounded" style="background-color:white">
-<h1>Index</h1>
+<h1>Avaliações</h1>
 
 <p>
-    <a class = "btn btn-primary" asp-action="Create">Criar Avaliação</a>
+   @*<a class = "btn btn-primary" asp-action="Create">Criar Avaliação</a>*@ 
 </p>
 <div class="m-2 table-responsive">
 
@@ -45,13 +45,13 @@
                 @Html.DisplayFor(modelItem => item.DescricaoAvaliacao)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Imovel.ImovelId)
+                @Html.DisplayFor(modelItem => item.Imovel.NomeAlojamento)
             </td>
             
             <td>
                 
                 <a class="btn btn-info"asp-action="Details" asp-route-id="@item.AvaliacaoId">Detalhes</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AvaliacaoId">Delete</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AvaliacaoId">Apagar</a>
             </td>
         </tr>
 }

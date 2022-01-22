@@ -3,14 +3,17 @@
 @{
     ViewData["Title"] = "Categorias";
 }
+<div class="container p-2 rounded" style="background-color:white;">
 
 <h1>Categorias</h1>
 
 <p>
     <a class="btn btn-success" asp-action="Create">Criar Nova Categoria</a>
 </p>
-<table class="table">
-    <thead>
+<div class="m-2 table-responsive">
+
+    <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                 Categoria
@@ -39,3 +42,5 @@
 }
     </tbody>
 </table>
+</div>
+</div>
