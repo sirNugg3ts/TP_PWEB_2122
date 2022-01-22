@@ -46,6 +46,36 @@ namespace TPPweb2122.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "2",
+                            Name = "Gestor",
+                            NormalizedName = "GESTOR"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "3",
+                            Name = "Funcionario",
+                            NormalizedName = "FUNCIONARIO"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ConcurrencyStamp = "4",
+                            Name = "Cliente",
+                            NormalizedName = "CLIENTE"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -128,6 +158,18 @@ namespace TPPweb2122.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 3,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -149,6 +191,92 @@ namespace TPPweb2122.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TPPweb2122.Models.Categoria", b =>
+                {
+                    b.Property<int>("CategoriaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NomeCategoria")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoriaId");
+
+                    b.ToTable("Categorias");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Imovel", b =>
+                {
+                    b.Property<int>("ImovelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Localizacao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeAlojamento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Preco")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("dataFinal")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dataInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("gestorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImovelId");
+
+                    b.HasIndex("CategoriaId");
+
+                    b.HasIndex("gestorId");
+
+                    b.ToTable("Imoveis");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Reserva", b =>
+                {
+                    b.Property<int>("ReservaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Confirmacao")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ImovelId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("dataEntrada")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("dataSaida")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ReservaId");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("ImovelId");
+
+                    b.ToTable("Reserva");
+                });
+
             modelBuilder.Entity("TPPweb2122.Models.Utilizador", b =>
                 {
                     b.Property<int>("Id")
@@ -163,6 +291,10 @@ namespace TPPweb2122.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -175,6 +307,16 @@ namespace TPPweb2122.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Morada")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -196,6 +338,10 @@ namespace TPPweb2122.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -214,6 +360,55 @@ namespace TPPweb2122.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Utilizador");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "426b3f08-e990-4c8d-bfc1-11a350138d77",
+                            Email = "admin@airbnb.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = true,
+                            Morada = "454",
+                            Nome = "344",
+                            NormalizedEmail = "ADMIN@AIRBNB.COM",
+                            NormalizedUserName = "ADMIN@AIRBNB.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFjGMOTNCi+vMB78gzCV3yHmDe37usXUFeDz+PQYKFlcRSO9BYzRXBHcoj4npfxZHw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c103c12d-ad5c-4183-8783-fc59ffefaeac",
+                            Telefone = "945",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@airbnb.com"
+                        });
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Cliente", b =>
+                {
+                    b.HasBaseType("TPPweb2122.Models.Utilizador");
+
+                    b.HasDiscriminator().HasValue("Cliente");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Funcionario", b =>
+                {
+                    b.HasBaseType("TPPweb2122.Models.Utilizador");
+
+                    b.Property<int?>("gestorId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("gestorId");
+
+                    b.HasDiscriminator().HasValue("Funcionario");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Gestor", b =>
+                {
+                    b.HasBaseType("TPPweb2122.Models.Utilizador");
+
+                    b.HasDiscriminator().HasValue("Gestor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -265,6 +460,62 @@ namespace TPPweb2122.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Imovel", b =>
+                {
+                    b.HasOne("TPPweb2122.Models.Categoria", "Categoria")
+                        .WithMany("Imoveis")
+                        .HasForeignKey("CategoriaId");
+
+                    b.HasOne("TPPweb2122.Models.Gestor", "Gestor")
+                        .WithMany("Imoveis")
+                        .HasForeignKey("gestorId");
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("Gestor");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Reserva", b =>
+                {
+                    b.HasOne("TPPweb2122.Models.Cliente", "Cliente")
+                        .WithMany("Reservas")
+                        .HasForeignKey("ClienteId");
+
+                    b.HasOne("TPPweb2122.Models.Imovel", "Imovel")
+                        .WithMany()
+                        .HasForeignKey("ImovelId");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Imovel");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Funcionario", b =>
+                {
+                    b.HasOne("TPPweb2122.Models.Gestor", "Gestor")
+                        .WithMany("Funcionarios")
+                        .HasForeignKey("gestorId");
+
+                    b.Navigation("Gestor");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Categoria", b =>
+                {
+                    b.Navigation("Imoveis");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Cliente", b =>
+                {
+                    b.Navigation("Reservas");
+                });
+
+            modelBuilder.Entity("TPPweb2122.Models.Gestor", b =>
+                {
+                    b.Navigation("Funcionarios");
+
+                    b.Navigation("Imoveis");
                 });
 #pragma warning restore 612, 618
         }

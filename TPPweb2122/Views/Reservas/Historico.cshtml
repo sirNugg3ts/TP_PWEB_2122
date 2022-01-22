@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TPPweb2122.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Historico";
+}
+
+
+<h1>Histórico de reservas Confirmadas/Concluidas</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dataEntrada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dataSaida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imovel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Confirmacao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.dataEntrada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dataSaida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imovel.NomeAlojamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Confirmacao)
+            </td>
+            <td>
+                <a asp-action="Detalhes" asp-route-id="@item.ReservaId">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
