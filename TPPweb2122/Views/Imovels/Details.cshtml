@@ -55,7 +55,11 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.ImovelId">Editar Imóvel</a> |
+    @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario") || User.IsInRole("Admin"))
+   {
+       <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.ImovelId">Editar Imóvel</a>
+   }
+    
     <a class="btn btn-primary" asp-action="Index">Voltar a lista</a>
 </div>
 </div>
