@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Details";
 }
+<div class ="container p-2 rounded" style="background-color:white">
 
-<h1>Details</h1>
+<h1>Detalhes</h1>
 
 <div>
     <h4>Reserva</h4>
     <hr />
-    <dl class="row">
+    <dl class="row justify-content-center">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.dataEntrada)
         </dt>
@@ -37,6 +38,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ReservaId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-success"asp-action="Edit" asp-route-id="@Model.ReservaId">Edit</a> |
+    <a class="btn btn-primary"asp-action="Index">Back to List</a>
+</div>
 </div>

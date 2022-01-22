@@ -14,8 +14,10 @@
 <div class="container-fluid w-75 p-3 rounded" style="background-color:white;"> 
 
 <h1>Histórico de reservas Confirmadas/Concluidas</h1>
-<table class="table">
-    <thead>
+<div class="m-2 table-responsive">
+
+    <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                Data Entrada
@@ -48,11 +50,12 @@
                 @Html.DisplayFor(modelItem => item.Confirmacao)
             </td>
             <td>
-                <a asp-action="Detalhes" asp-route-id="@item.ReservaId">Details</a> 
-                <a asp-controller="Avaliacaos" asp-action="Create" asp-route-id="@item.ReservaId">Avaliar</a>
+                <a class="btn btn-info"asp-action="Detalhes" asp-route-id="@item.ReservaId">Details</a> 
+                <a class="btn btn-primary"asp-controller="Avaliacaos" asp-action="Create" asp-route-id="@item.ReservaId">Avaliar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>
 </div>
