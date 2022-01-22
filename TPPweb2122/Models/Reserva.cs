@@ -18,7 +18,7 @@ namespace TPPweb2122.Models
         [Display(Name = "ID Cliente")]
         public int? ClienteId { get; set; }
         public virtual Cliente Cliente { get; set; }
-        public bool? Confirmacao { get; set; }
+        public bool Confirmacao { get; set; }
 
     }
 }
