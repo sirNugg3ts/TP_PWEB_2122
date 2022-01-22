@@ -27,7 +27,16 @@ namespace TPPweb2122.Controllers
         public async Task<IActionResult> Index(int? page)
         {
             var gestorView = new FuncionariosViewModel();
-            IQueryable<Funcionario> listaGestores = _context.Funcionario;
+            IQueryable<Funcionario> listaGestores;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (User.IsInRole("Admin"))
+            {
+                listaGestores = _context.Funcionario;
+            }else 
+            {
+                listaGestores = _context.Funcionario.Where(g=>g.gestorId==int.Parse(userId));
+            }
+            
             int pagina = (page == null || page < 1) ? 1 : page.Value;
             int nReg = 8;
             gestorView.paginacao(listaGestores, pagina, nReg);
@@ -115,7 +124,7 @@ namespace TPPweb2122.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("gestorId,Nome,Morada,Telefone,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Funcionario funcionario)
+        public async Task<IActionResult> Edit(int id, [Bind("Nome,Morada,Telefone,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,gestorId")] Funcionario funcionario)
         {
             if (id != funcionario.Id)
             {

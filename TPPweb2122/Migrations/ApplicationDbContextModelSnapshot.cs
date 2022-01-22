@@ -191,6 +191,34 @@ namespace TPPweb2122.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TPPweb2122.Models.Avaliacao", b =>
+                {
+                    b.Property<int>("AvaliacaoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DescricaoAvaliacao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ImovelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PontuacaoAvaliacao")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("clienteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AvaliacaoId");
+
+                    b.HasIndex("ImovelId");
+
+                    b.HasIndex("clienteId");
+
+                    b.ToTable("Avaliacoes");
+                });
+
             modelBuilder.Entity("TPPweb2122.Models.Categoria", b =>
                 {
                     b.Property<int>("CategoriaId")
@@ -368,7 +396,7 @@ namespace TPPweb2122.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "426b3f08-e990-4c8d-bfc1-11a350138d77",
+                            ConcurrencyStamp = "64d2d733-0d83-43da-9e9f-3b7af3faf7dd",
                             Email = "admin@airbnb.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
@@ -376,9 +404,9 @@ namespace TPPweb2122.Migrations
                             Nome = "344",
                             NormalizedEmail = "ADMIN@AIRBNB.COM",
                             NormalizedUserName = "ADMIN@AIRBNB.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFjGMOTNCi+vMB78gzCV3yHmDe37usXUFeDz+PQYKFlcRSO9BYzRXBHcoj4npfxZHw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBMEbPy77RNVP3uJzgMMyNXTglUeN58rhIw9LSue/tItgWt/HcQj5ATLrRV1n8kTPw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c103c12d-ad5c-4183-8783-fc59ffefaeac",
+                            SecurityStamp = "e091186b-e645-45cc-869e-6e12368eb791",
                             Telefone = "945",
                             TwoFactorEnabled = false,
                             UserName = "admin@airbnb.com"
@@ -462,6 +490,21 @@ namespace TPPweb2122.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TPPweb2122.Models.Avaliacao", b =>
+                {
+                    b.HasOne("TPPweb2122.Models.Imovel", "Imovel")
+                        .WithMany()
+                        .HasForeignKey("ImovelId");
+
+                    b.HasOne("TPPweb2122.Models.Cliente", "cliente")
+                        .WithMany("Avaliacoes")
+                        .HasForeignKey("clienteId");
+
+                    b.Navigation("cliente");
+
+                    b.Navigation("Imovel");
+                });
+
             modelBuilder.Entity("TPPweb2122.Models.Imovel", b =>
                 {
                     b.HasOne("TPPweb2122.Models.Categoria", "Categoria")
@@ -481,7 +524,8 @@ namespace TPPweb2122.Migrations
                 {
                     b.HasOne("TPPweb2122.Models.Cliente", "Cliente")
                         .WithMany("Reservas")
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("TPPweb2122.Models.Imovel", "Imovel")
                         .WithMany()
@@ -508,6 +552,8 @@ namespace TPPweb2122.Migrations
 
             modelBuilder.Entity("TPPweb2122.Models.Cliente", b =>
                 {
+                    b.Navigation("Avaliacoes");
+
                     b.Navigation("Reservas");
                 });
 

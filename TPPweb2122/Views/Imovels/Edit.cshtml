@@ -49,6 +49,7 @@
                 <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
                 <span asp-validation-for="CategoriaId" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="gestorId" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-success" />
             </div>

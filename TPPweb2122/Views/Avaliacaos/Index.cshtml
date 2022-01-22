@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TPPweb2122.Models.Avaliacao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PontuacaoAvaliacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescricaoAvaliacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imovel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cliente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PontuacaoAvaliacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescricaoAvaliacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imovel.ImovelId)
+            </td>
+            
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AvaliacaoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AvaliacaoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AvaliacaoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
