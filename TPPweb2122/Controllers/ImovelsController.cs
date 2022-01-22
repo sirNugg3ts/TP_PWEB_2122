@@ -117,7 +117,7 @@ namespace TPPweb2122.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Gestor")]
-        public async Task<IActionResult> Edit(int id, [Bind("ImovelId,NomeAlojamento,Localizacao,Descricao,Preco,dataInicio,dataFinal,CategoriaId")] Imovel imovel)
+        public async Task<IActionResult> Edit(int id, [Bind("ImovelId,NomeAlojamento,Localizacao,Descricao,Preco,dataInicio,dataFinal,CategoriaId,gestorId")] Imovel imovel)
         {
             if (id != imovel.ImovelId)
             {

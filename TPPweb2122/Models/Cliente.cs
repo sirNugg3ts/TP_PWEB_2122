@@ -7,7 +7,9 @@ namespace TPPweb2122.Models
         public Cliente()
         {
             Reservas = new HashSet<Reserva>();
+            Avaliacoes = new HashSet<Avaliacao>();
         }
         public ICollection<Reserva> Reservas { get; set; }
+        public ICollection<Avaliacao> Avaliacoes { get; set; }
     }
 }

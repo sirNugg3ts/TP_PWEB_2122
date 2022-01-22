@@ -14,15 +14,22 @@ namespace TPPweb2122.Data
         public virtual DbSet<Categoria> Categorias {get; set;}
         public virtual DbSet<Imovel> Imoveis {get; set;}
         //public virtual DbSet<Reserva> Reservas {get; set;}
-        //public virtual DbSet<Avaliacao> Avaliacoes {get; set;}
+        public virtual DbSet<Avaliacao> Avaliacoes {get; set;}
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            builder.Entity<Cliente>().HasMany(c => c.Reservas).WithOne(t => t.Cliente).OnDelete(DeleteBehavior.SetNull);
+            builder.Entity<Cliente>().HasMany(c => c.Avaliacoes).WithOne(t => t.cliente).OnDelete(DeleteBehavior.SetNull);
 
+            builder.Entity<Funcionario>().HasOne(e => e.Gestor).WithMany(t => t.Funcionarios).OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Gestor>().HasMany(e => e.Imoveis).WithOne(t => t.Gestor).OnDelete(DeleteBehavior.SetNull);
+            builder.Entity<Gestor>().HasMany(e => e.Funcionarios).WithOne(t => t.Gestor).OnDelete(DeleteBehavior.SetNull);
+
+            base.OnModelCreating(builder);
             this.SeedRoles(builder);
             this.SeedUsers(builder);
             this.SeedUserRoles(builder);

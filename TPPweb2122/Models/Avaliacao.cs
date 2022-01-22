@@ -7,5 +7,7 @@
         public string DescricaoAvaliacao { get; set; }
         public int? ImovelId { get; set; }
         public virtual Imovel Imovel { get; set; }
+        public int? clienteId { get; set; }
+        public virtual Cliente cliente { get; set; }
     }
 }
