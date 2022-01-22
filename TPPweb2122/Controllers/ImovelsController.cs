@@ -11,6 +11,7 @@ using TPPweb2122.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using TPPweb2122.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace TPPweb2122.Controllers
 {
@@ -18,7 +19,7 @@ namespace TPPweb2122.Controllers
     public class ImovelsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
+       
         public ImovelsController(ApplicationDbContext context)
         {
             _context = context;
@@ -35,6 +36,15 @@ namespace TPPweb2122.Controllers
             {
                 imovel = _context.Imoveis.Include(c => c.Categoria)
                     .Where(f => f.gestorId == int.Parse(userId));
+            }else if (User.IsInRole("Funcionario"))
+            {
+
+                var funcionario = await _context.Funcionario
+              .Include(f => f.Gestor)
+              .FirstOrDefaultAsync(m => m.Id == int.Parse(userId));
+
+                imovel = _context.Imoveis.Include(c => c.Categoria)
+                    .Where(f => f.gestorId == funcionario.gestorId);
             }
             else
             {

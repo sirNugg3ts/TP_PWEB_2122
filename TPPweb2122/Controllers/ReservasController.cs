@@ -34,6 +34,14 @@ namespace TPPweb2122.Controllers
             {
                 imovel = _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(i => i.Imovel.gestorId == int.Parse(userId));
             }
+            else if (User.IsInRole("Funcionario"))
+            {
+                var funcionario = await _context.Funcionario
+              .Include(f => f.Gestor)
+              .FirstOrDefaultAsync(m => m.Id == int.Parse(userId));
+
+                imovel = _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(c => (c.Imovel.gestorId == funcionario.gestorId));
+            }
             else
             {
                 imovel = _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(c => (c.ClienteId == int.Parse(userId)) && (c.Confirmacao == false));
