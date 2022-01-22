@@ -1,31 +1,39 @@
-﻿@model IEnumerable<TPPweb2122.Models.Reserva>
+﻿@model TPPweb2122.ViewModels.ReservasViewModel
+
+@using X.PagedList.Mvc.Core; @*import this so we get our HTML Helper*@
+@using X.PagedList; @*import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)*@
+@using X.PagedList.Mvc.Core.Fluent
+@using X.PagedList.Web.Common
+
 
 @{
     ViewData["Title"] = "Historico";
+    var dados = (IPagedList)Model.Reservas;
 }
-
+<link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
+<div class="container-fluid w-75 p-3 rounded" style="background-color:white;"> 
 
 <h1>Histórico de reservas Confirmadas/Concluidas</h1>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.dataEntrada)
+               Data Entrada
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dataSaida)
+               Data Saída
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Imovel)
+                Imóvel
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Confirmacao)
+               Confirmado
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Reservas) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.dataEntrada)
@@ -41,8 +49,10 @@
             </td>
             <td>
                 <a asp-action="Detalhes" asp-route-id="@item.ReservaId">Details</a> 
+                <a asp-controller="Avaliacaos" asp-action="Create" asp-route-id="@item.ReservaId">Avaliar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>

@@ -45,15 +45,28 @@ namespace TPPweb2122.Controllers
 
          
         }
-        public async Task<IActionResult> Historico()
+        public async Task<IActionResult> Historico(int? page)
         {
+            var imoveisview = new ReservasViewModel();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View(await _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(c => (c.ClienteId == int.Parse(userId)) && (c.Confirmacao == true)).ToListAsync());
+            IQueryable<Reserva> imovel;
+            
+            
+                imovel = _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(c => (c.ClienteId == int.Parse(userId)) && (c.Confirmacao == true));
+            
+            int pagina = (page == null || page < 1) ? 1 : page.Value;
+            int nReg = 8;
+            imoveisview.paginacao(imovel, pagina, nReg);
+            return View(imoveisview);
+
+           
         }
         // GET: Reservas/Details/5
         [Authorize(Roles = "Admin,Gestor,Funcionario,Cliente")]
         public async Task<IActionResult> Details(int? id)
         {
+
+
             if (id == null)
             {
                 return NotFound();
@@ -135,12 +148,13 @@ namespace TPPweb2122.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Funcionario,Gestor,Cliente")]
 
-        public async Task<IActionResult> Edit(int id, [Bind("ReservaId,dataEntrada,dataSaida,ImovelId,ClienteId")] Reserva reserva)
+        public async Task<IActionResult> Edit(int id, [Bind("ReservaId,dataEntrada,dataSaida,ImovelId,ClienteId,Confirmacao")] Reserva reserva)
         {
             if (id != reserva.ReservaId)
             {
                 return NotFound();
             }
+          
 
             if (ModelState.IsValid)
             {
