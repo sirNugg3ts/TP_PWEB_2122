@@ -3,58 +3,62 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h1>Details</h1>
-
-<div>
-    <h4>Imovel</h4>
+<div class ="container p-2 rounded" style="background-color:white">
+    <div>
+   
+     <h1>Detalhes</h1>
     <hr />
+   
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeAlojamento)
+        <dt class = "col-sm-3">
+           Nome do Alojamento
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.NomeAlojamento)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Localizacao)
+        <dt class = "col-sm-3">
+            Localização
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.Localizacao)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
+        <dt class = "col-sm-3">
+          Descrição
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.Descricao)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Preco)
+        <dt class = "col-sm-3">
+           Preço
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.Preco)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dataInicio)
+        <dt class = "col-sm-3">
+           Data de Início
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.dataInicio)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dataFinal)
+        <dt class = "col-sm-3">
+            Data de Fim
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.dataFinal)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
+        <dt class = "col-sm-3">
+          Categoria
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categoria.CategoriaId)
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Categoria.NomeCategoria)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ImovelId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.ImovelId">Editar Imóvel</a> |
+    <a class="btn btn-primary" asp-action="Index">Voltar a lista</a>
 </div>
+</div>
+
+
+
