@@ -15,18 +15,23 @@
             <input type="hidden" asp-for="ReservaId" />
             <div class="form-group">
                 <label asp-for="dataEntrada" class="control-label"></label>
-                <input asp-for="dataEntrada" class="form-control" />
+                <input asp-for="dataEntrada" class="form-control" disabled />
                 <span asp-validation-for="dataEntrada" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="dataSaida" class="control-label"></label>
-                <input asp-for="dataSaida" class="form-control" />
+                <input asp-for="dataSaida" class="form-control" disabled/>
                 <span asp-validation-for="dataSaida" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ImovelId" class="control-label"></label>
                 <select asp-for="ImovelId" class="form-control" asp-items="ViewBag.ImovelId" disabled></select>
                 <span asp-validation-for="ImovelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Confirmacao" class="control-label"></label>
+                <select asp-for="Confirmacao" class="form-control" asp-items="ViewBag.Confirmacao" ></select>
+                <span asp-validation-for="Confirmacao" class="text-danger"></span>
             </div>
             
             <div class="form-group">

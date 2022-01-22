@@ -10,6 +10,7 @@
     
 }
  <h1>Reservas</h1>
+  
 <table class="table">
     <thead>
         <tr>
@@ -28,7 +29,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Confirmacao)
             </th>
-            <th></th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -50,7 +51,8 @@
                 @Html.DisplayFor(modelItem => item.Confirmacao)
             </td>
             <td>
-                    @if (User.IsInRole("Gestor"))
+                  
+                    @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
                     {
                         <a class="btn btn-primary m-1" asp-action="Edit" asp-route-id="@item.ReservaId">Edit</a>
                         <a class="btn btn-info m-1" asp-action="Details" asp-route-id="@item.ReservaId">Details</a>
