@@ -46,4 +46,16 @@ namespace TPPweb2122.ViewModels
         }
     }
 
-}
+
+        public class HistoricoViewModelo
+        {
+            public IPagedList<Avaliacao> Avaliacoes { get; set; }
+
+            public void paginacao(IQueryable<Avaliacao> reservas, int page, int nreg)
+            {
+                Avaliacoes = reservas.ToPagedList(page, nreg);
+                return;
+            }
+        }
+
+    }

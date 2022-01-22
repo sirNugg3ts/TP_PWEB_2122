@@ -1,34 +1,42 @@
-﻿@model IEnumerable<TPPweb2122.Models.Avaliacao>
-
+﻿@model TPPweb2122.ViewModels.HistoricoViewModelo
+@using X.PagedList.Mvc.Core; @*import this so we get our HTML Helper*@
+@using X.PagedList; @*import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)*@
+@using X.PagedList.Mvc.Core.Fluent
+@using X.PagedList.Web.Common
 @{
     ViewData["Title"] = "Index";
+    var dados = (IPagedList)Model.Avaliacoes;
 }
+<link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
 
+<div class="container-fluid w-75 p-3 rounded" style="background-color:white">
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class = "btn btn-primary" asp-action="Create">Criar Avaliação</a>
 </p>
-<table class="table">
-    <thead>
+<div class="m-2 table-responsive">
+
+    <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PontuacaoAvaliacao)
+               Pontuação
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DescricaoAvaliacao)
+                Comentário
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Imovel)
+                Imóvel
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.cliente)
+               Cliente
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Avaliacoes) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PontuacaoAvaliacao)
@@ -41,11 +49,21 @@
             </td>
             
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AvaliacaoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AvaliacaoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AvaliacaoId">Delete</a>
+                
+                <a class="btn btn-info"asp-action="Details" asp-route-id="@item.AvaliacaoId">Detalhes</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.AvaliacaoId">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+ <div>
+        @(Html.Pager(dados)
+        .Url(page => Url.Action("Index", new { page = page }))
+        .DisplayLinkToFirstPage(PagedListDisplayMode.IfNeeded)
+        .DisplayLinkToLastPage(PagedListDisplayMode.IfNeeded)
+        .Build())
+    </div>
+</div>
+
+</div>

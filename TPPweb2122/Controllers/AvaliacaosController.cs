@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TPPweb2122.Data;
 using TPPweb2122.Models;
+using TPPweb2122.ViewModels;
 
 namespace TPPweb2122.Controllers
 {
@@ -21,11 +23,25 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Avaliacaos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            var imoveisview = new HistoricoViewModelo();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var applicationDbContext = _context.Avaliacoes.Include(a => a.cliente).Include(a => a.Imovel).Where(c => (c.clienteId == int.Parse(userId)));
-            return View(await applicationDbContext.ToListAsync());
+            IQueryable<Avaliacao> imovel;
+            if (User.IsInRole("Cliente"))
+            {
+                imovel = _context.Avaliacoes.Include(a => a.cliente).Include(a => a.Imovel).Where(c => (c.clienteId == int.Parse(userId)));
+            }
+            else
+            {
+                imovel = _context.Avaliacoes.Include(a => a.cliente).Include(a => a.Imovel);
+            }
+            int pagina = (page == null || page < 1) ? 1 : page.Value;
+            int nReg = 8;
+            imoveisview.paginacao(imovel, pagina, nReg);
+            return View(imoveisview);
+
+        
         }
 
         // GET: Avaliacaos/Details/5
@@ -49,6 +65,8 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Avaliacaos/Create
+        [Authorize(Roles = "Cliente")]
+
         public IActionResult Create()
         {
             ViewData["ImovelId"] = new SelectList(_context.Imoveis, "ImovelId", "NomeAlojamento");
@@ -60,6 +78,8 @@ namespace TPPweb2122.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Cliente")]
+
         public async Task<IActionResult> Create([Bind("AvaliacaoId,PontuacaoAvaliacao,DescricaoAvaliacao,ImovelId,clienteId")] Avaliacao avaliacao)
         {
             if (ModelState.IsValid)
@@ -74,6 +94,8 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Avaliacaos/Edit/5
+        [Authorize(Roles = "Cliente")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,6 +118,8 @@ namespace TPPweb2122.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Cliente")]
+
         public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoId,PontuacaoAvaliacao,DescricaoAvaliacao,ImovelId,clienteId")] Avaliacao avaliacao)
         {
             if (id != avaliacao.AvaliacaoId)
@@ -129,6 +153,8 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Avaliacaos/Delete/5
+        [Authorize(Roles = "Admin,Funcionario,Gestor,Cliente")]
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -151,6 +177,8 @@ namespace TPPweb2122.Controllers
         // POST: Avaliacaos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Funcionario,Gestor,Cliente")]
+
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var avaliacao = await _context.Avaliacoes.FindAsync(id);
