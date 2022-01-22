@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TPPweb2122.Data;
 using TPPweb2122.Models;
+using TPPweb2122.ViewModels;
 
 namespace TPPweb2122.Controllers
 {
@@ -23,20 +24,17 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Funcionarios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            IQueryable<Funcionario> funcionario;
-            if (User.IsInRole("Gestor"))
-            {
-               
-                funcionario = _context.Funcionario.Where(f => f.gestorId== int.Parse(userId));
-                return View(await funcionario.ToListAsync());
-            }
-            else
-            {
-               return View(await _context.Funcionario.ToListAsync());
-            }
+            var gestorView = new FuncionariosViewModel();
+            IQueryable<Funcionario> listaGestores = _context.Funcionario;
+            int pagina = (page == null || page < 1) ? 1 : page.Value;
+            int nReg = 8;
+            gestorView.paginacao(listaGestores, pagina, nReg);
+
+            return View(gestorView);
+
+            
             
            
         }

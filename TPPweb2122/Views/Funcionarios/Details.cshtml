@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Details";
 }
+<div class="container p-2 rounded" style="background-color:white;">
 
-<h1>Details</h1>
+<h1>Detalhes</h1>
 
 <div>
-    <h4>Funcionario</h4>
+  
     <hr />
-    <dl class="row">
+    <dl class="row justify-content-center">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Gestor)
         </dt>
@@ -49,6 +50,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn-primary btn" asp-action="Index">Voltar à lista</a>
+</div>
 </div>

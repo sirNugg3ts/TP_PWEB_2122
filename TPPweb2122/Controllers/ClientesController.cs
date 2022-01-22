@@ -44,7 +44,7 @@ namespace TPPweb2122.Controllers
         }
 
         // GET: Clientes/Create
-        public IActionResult Create()
+       /* public IActionResult Create()
         {
             return View();
         }
@@ -63,7 +63,7 @@ namespace TPPweb2122.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
-        }
+        }*/
 
         // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(int? id)

@@ -24,4 +24,14 @@ namespace TPPweb2122.ViewModels
             return;
         }
     }
+    public class FuncionariosViewModel
+    {
+        public IPagedList<Funcionario> Funcionarios { get; set; }
+
+        public void paginacao(IQueryable<Funcionario> funcionarios, int page, int nreg)
+        {
+            Funcionarios = funcionarios.ToPagedList(page, nreg);
+            return;
+        }
+    }
 }
