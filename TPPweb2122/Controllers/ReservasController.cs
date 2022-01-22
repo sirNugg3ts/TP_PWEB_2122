@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TPPweb2122.Data;
 using TPPweb2122.Models;
+using TPPweb2122.ViewModels;
 
 namespace TPPweb2122.Controllers
 {
@@ -24,19 +25,25 @@ namespace TPPweb2122.Controllers
 
         // GET: Reservas
         [Authorize(Roles = "Admin,Gestor,Funcionario,Cliente")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            var imoveisview = new ReservasViewModel();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
+            IQueryable<Reserva> imovel;
             if (User.IsInRole("Gestor"))
             {
-                return View(await _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(i => i.Imovel.gestorId == int.Parse(userId)).ToListAsync());
+                imovel = _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(i => i.Imovel.gestorId == int.Parse(userId));
             }
-            else 
+            else
             {
-                return View(await _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(c => (c.ClienteId == int.Parse(userId)) && ( c.Confirmacao == false)).ToListAsync());
+                imovel = _context.Reserva.Include(r => r.Cliente).Include(r => r.Imovel).Where(c => (c.ClienteId == int.Parse(userId)) && (c.Confirmacao == false));
             }
-            
+            int pagina = (page == null || page < 1) ? 1 : page.Value;
+            int nReg = 8;
+            imoveisview.paginacao(imovel, pagina, nReg);
+            return View(imoveisview);
+
+         
         }
         public async Task<IActionResult> Historico()
         {

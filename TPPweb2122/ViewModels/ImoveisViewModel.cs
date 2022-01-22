@@ -34,4 +34,15 @@ namespace TPPweb2122.ViewModels
             return;
         }
     }
+
+    public class ReservasViewModel
+    {
+        public IPagedList<Reserva> Reservas { get; set; }
+
+        public void paginacao(IQueryable<Reserva> reservas, int page, int nreg)
+        {
+            Reservas = reservas.ToPagedList(page, nreg);
+            return;
+        }
+    }
 }

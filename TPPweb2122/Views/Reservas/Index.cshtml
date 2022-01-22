@@ -1,8 +1,19 @@
-﻿@model IEnumerable<TPPweb2122.Models.Reserva>
+﻿@model TPPweb2122.ViewModels.ReservasViewModel
+
+
+@using X.PagedList.Mvc.Core; @*import this so we get our HTML Helper*@
+@using X.PagedList; @*import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)*@
+@using X.PagedList.Mvc.Core.Fluent
+@using X.PagedList.Web.Common
+
 
 @{
     ViewData["Title"] = "Index";
+    var dados = (IPagedList)Model.Reservas;
 }
+<link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
+<div class="container-fluid w-75 p-3 rounded" style="background-color:white;"> 
+    
 @if (User.IsInRole("Cliente"))
 {
     <a class="btn btn-primary" asp-controller="Reservas" asp-action="Create">Reservar</a>
@@ -10,30 +21,30 @@
     
 }
  <h1>Reservas</h1>
-  
-<table class="table">
-    <thead>
+  <div class="m-2 table-responsive">
+      <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.dataEntrada)
+               Data de Entrada
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dataSaida)
+                Data de Saída
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Imovel)
+                Imóvel
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cliente)
+               Cliente
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Confirmacao)
+                Confirmado
             </th>
             <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Reservas) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.dataEntrada)
@@ -47,20 +58,33 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Cliente.Nome)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Confirmacao)
-            </td>
+            
+                            @if(item.Confirmacao == true)
+                            {
+                                <td>Confirmado</td>
+                                
+                            }
+                            else
+                            {
+                                <td>Não Confirmado</td>
+
+                            }
+                            
+            
             <td>
                   
                     @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
                     {
-                        <a class="btn btn-primary m-1" asp-action="Edit" asp-route-id="@item.ReservaId">Edit</a>
-                        <a class="btn btn-info m-1" asp-action="Details" asp-route-id="@item.ReservaId">Details</a>
+                        <a class="btn btn-primary m-1" asp-action="Edit" asp-route-id="@item.ReservaId">Editar</a>
+                        <a class="btn btn-info m-1" asp-action="Details" asp-route-id="@item.ReservaId">Detalhes</a>
                     }
                
-                <a class="btn btn-danger m-1" asp-action="Delete" asp-route-id="@item.ReservaId">Delete</a>
+                <a class="btn btn-danger m-1" asp-action="Delete" asp-route-id="@item.ReservaId">Apagar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+  </div>
+
+</div>
